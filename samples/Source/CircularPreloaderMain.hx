@@ -7,7 +7,7 @@ import openfl.display.Sprite;
 import openfl.Assets;
 
 
-class Main extends Sprite {
+class CircularPreloaderMain extends Sprite {
 	
 	
 	public function new () {
