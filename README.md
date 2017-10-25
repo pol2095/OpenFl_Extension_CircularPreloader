@@ -7,7 +7,6 @@ The Circular Preloader display download progress. It is used while the applicati
 ## Quick Links
 
 * [Website](http://pol2095.free.fr/OpenFl-Extensions/)
-* [API Reference](http://pol2095.free.fr/Starling-Feathers-Extensions/docs/feathers/extensions/progress/package-detail.html)
 * [Discussion Forum](http://community.openfl.org/)
 * [Github Project](https://github.com/pol2095/OpenFl_Extension_CircularPreloader/)
 
