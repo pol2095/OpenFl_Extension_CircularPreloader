@@ -2,7 +2,7 @@
 <project>
 	
 	<meta title="CircularPreloader" package="org.openfl.samples.circularPreloader" version="1.0.0" company="OpenFL" />
-	<app main="CircularPreloaderMain" file="CircularPreloader" path="Export" preloader="utils.CircularPreloader" />
+	<app main="CircularPreloaderMain" file="CircularPreloader" path="Export" preloader="openfl.extensions.preloader.CircularPreloader" />
 	
 	<source path="Source" />
 	

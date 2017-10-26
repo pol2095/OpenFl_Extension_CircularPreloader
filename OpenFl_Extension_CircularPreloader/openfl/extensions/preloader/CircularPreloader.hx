@@ -1,4 +1,12 @@
-package utils;
+/*
+Copyright 2017 pol2095. All Rights Reserved.
+
+This program is free software. You can redistribute and/or modify it in
+accordance with the terms of the accompanying license agreement.
+*/
+package openfl.extensions.preloader;
+
+import haxe.Timer;
 import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.events.ProgressEvent;
@@ -9,68 +17,91 @@ import openfl.utils.Timer;
 import openfl.events.TimerEvent;
 import openfl.filters.DropShadowFilter;
 
+/**
+ * The Circular Preloader display download progress. It is used while the application is downloading and loading.
+ */
 class CircularPreloader extends Sprite
 {
-    /**
+	/**
 		 * Indicates the radius of the circle (in pixels).
 		 *
-		 * @default 100
+		 * The default value is 100.
 		 */
+	@:dox(show)
 	private var radius : Int = 100;
+	
 	/**
 		 * Indicates the color of the circle.
 		 *
 		 * @default 0x000000
 		 */
+	@:dox(show)
 	private var color : Int = 0x000000;
+	
 	/**
 		 * Indicates the color of the back circle.
 		 *
-		 * @default 0x000000
+		 * The default value is 0x000000.
 		 */
+	@:dox(show)
     private var backCircleColor : Int = 0x000000;
+	
 	/**
 		 * Indicates the alpha transparency value of the back circle.
 		 *
-		 * @default 0.2
+		 * The default value is 0.2.
 		 */
+	@:dox(show)
     private var backCircleAlpha : Float = 0.2;
+	
 	/**
 		 * Indicates the color of the text.
 		 *
-		 * @default 0x000000
+		 * The default value is 0x000000.
 		 */
+	@:dox(show)
     private var textColor : Int = 0x000000;
+	
 	/**
 		 * Indicates the font of the text.
 		 *
-		 * @default Verdana
+		 * The default value is "Verdana".
 		 */
+	@:dox(show)
     private var textFont : String = "Verdana";
+	
 	/**
 		 * Indicates the size of the text.
 		 *
-		 * @default 12
+		 * The default value is 12.
 		 */
+	@:dox(show)
     private var textSize : Int = 12;
+	
 	/**
 		 * The visibility of the text.
 		 *
-		 * @default true
+		 * The default value is true.
 		 */
+	@:dox(show)
     private var textVisible : Bool = true;
+	
 	/**
 		 * The visibility of the back circle.
 		 *
-		 * @default true
+		 * The default value is true.
 		 */
+	@:dox(show)
     private var backCircleVisible : Bool = true;
+	
 	/**
 		 * The thickness of the circle (in pixels).
 		 *
-		 * @default 5
+		 * The default value is 10.
 		 */
+	@:dox(show)
     private var thickness : Float = 10;
+	
 	/**
          *  The DropShadowFilter class lets you add a drop shadow to display objects.
 		 *
@@ -80,19 +111,32 @@ class CircularPreloader extends Sprite
 		 * shadow.angle = 25;
 		 * shadow.alpha = 0.7;
 		 * circleProgress.dropShadowFilter = shadow;</listing>
+		 *
+		 * The default value is null.
          */
+	@:dox(show)
     private var dropShadowFilter : DropShadowFilter = null;
+	
 	/**
 		 * The delay before the circle appears in millisecond.
 		 *
-		 * @default 1000
+		 * The default value is 0.
 		 */
-    private var delay : Float = 1000;
+    private var delay : Float = 0;
+	
+	/**
+		 * Hide the circle when the app loading.
+		 *
+		 * The default value is false.
+		 */
+	@:dox(show)
+	private var hideLoading : Bool = false;
 	
 	private var circleProgress:CircleProgress;
 	private var field:TextField = new TextField();
-	private var timer:Timer;
-	    
+	private var timer:openfl.utils.Timer;
+	
+	@:dox(hide)
     public function new()
     {
         super();
@@ -103,7 +147,7 @@ class CircularPreloader extends Sprite
 		}
 		else
 		{
-			timer = new Timer(delay, 1);
+			timer = new openfl.utils.Timer(delay, 1);
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, timerCompleteHandler);
 			timer.start();
 		}
@@ -156,6 +200,12 @@ class CircularPreloader extends Sprite
 		{
 			var percentLoaded = event.bytesLoaded / event.bytesTotal;
 			var percentage:Int = Std.int( percentLoaded * 100 );
+			if( hideLoading && percentage == 100 )
+			{
+				field.visible = circleProgress.visible = false;
+				circleProgress.bitmap.bitmapData.dispose();
+				return;
+			}
 			if(textVisible) field.text = Std.string( percentage ) + "%";
 			circleProgress.bitmap.bitmapData = circleProgress.draw( percentage );
 		}
@@ -164,6 +214,15 @@ class CircularPreloader extends Sprite
 	private function this_onComplete(event:Event):Void
 	{
 		dispose();
+		
+		// optional
+		
+		event.preventDefault ();
+		
+		haxe.Timer.delay (function ()
+		{
+			dispatchEvent (new Event (Event.UNLOAD));
+		}, 2000);
 	}
 	
 	private function timerCompleteHandler(event:TimerEvent):Void
@@ -171,6 +230,7 @@ class CircularPreloader extends Sprite
 		init();
 	}
 	
+	@:dox(hide)
 	public function dispose():Void
 	{
 		removeChild(field);

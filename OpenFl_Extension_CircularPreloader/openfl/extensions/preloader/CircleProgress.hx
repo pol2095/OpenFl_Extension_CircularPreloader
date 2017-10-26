@@ -1,4 +1,10 @@
-package utils;
+/*
+Copyright 2017 pol2095. All Rights Reserved.
+
+This program is free software. You can redistribute and/or modify it in
+accordance with the terms of the accompanying license agreement.
+*/
+package openfl.extensions.preloader;
 
 import openfl.display.Sprite;
 import openfl.display.Shape;
@@ -9,8 +15,10 @@ import openfl.display.BitmapData;
 import openfl.display.Graphics;
 import openfl.filters.DropShadowFilter;
 
+@:dox(hide)
 class CircleProgress extends Sprite
 {
+	@:dox(hide)
 	public var bitmap : Bitmap = new Bitmap();
 	
 	private var radius : Int;
@@ -21,6 +29,7 @@ class CircleProgress extends Sprite
     private var thickness : Float;
     private var dropShadowFilter : DropShadowFilter;
 	
+	@:dox(hide)
 	public function new(radius : Int, color : Int, backCircleColor : Int, backCircleAlpha : Float, backCircleVisible : Bool, thickness : Float, dropShadowFilter : DropShadowFilter)
 	{
 		super();
@@ -41,6 +50,7 @@ class CircleProgress extends Sprite
 		//this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 	}
 	
+	@:dox(hide)
 	public function draw(percentage:Int = 0):BitmapData
 	{
 		if(percentage < 0) percentage = 0;
